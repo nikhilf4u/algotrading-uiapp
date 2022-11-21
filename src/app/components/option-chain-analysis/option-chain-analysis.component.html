@@ -1,0 +1,91 @@
+<div class="index">
+  <mat-radio-group [(ngModel)]="selectedIndex" (ngModelChange)="changeIndexData()">
+    <mat-radio-button style="margin-right: 5px;" [checked]="true" value="nifty" name="index">Nifty</mat-radio-button>
+    <mat-radio-button [value]="'niftybank'" name="index">Nifty Bank</mat-radio-button>
+  </mat-radio-group>
+  <button class="btn btn-primary" (click)="openStrikePriceSelectionDialog()">Select Strike Price</button>
+  <mat-radio-group>
+    <mat-radio-button (change)="changeOIType($event)" style="margin-right: 5px;" [checked]="true" value="changeInOI">
+      Change in OI</mat-radio-button>
+    <mat-radio-button (change)="changeOIType($event)" style="margin-right: 5px;" [value]="'overallOI'">OverAll OI
+    </mat-radio-button>
+    <mat-radio-button (change)="changeOIType($event)" [value]="'overallOITrend'">OverAll OI Trend</mat-radio-button>
+  </mat-radio-group>
+</div>
+<div class="row" *ngIf="!isCallPutTrendEnabled">
+  <mat-card class="col-2" >
+    <label style="font-weight: 800;align-content:center">OverAll OI</label>
+    <div id="chart" *ngIf="overAllOIChart">
+      <apx-chart [series]="overAllOIChart.series" [chart]="overAllOIChart.chart"
+        [dataLabels]="overAllOIChart.dataLabels" [plotOptions]="overAllOIChart.plotOptions"
+        [yaxis]="overAllOIChart.yaxis" [legend]="overAllOIChart.legend" [fill]="overAllOIChart.fill"
+        [stroke]="overAllOIChart.stroke" [tooltip]="overAllOIChart.tooltip" [xaxis]="overAllOIChart.xaxis"></apx-chart>
+    </div>
+  </mat-card>
+  <mat-card class="col-10">
+    <label style="font-weight: 800;align-content:center" *ngIf="isChangeInOIEnabled">Change in OI</label>
+    <label style="font-weight: 800;align-content:center" *ngIf="!isChangeInOIEnabled">Oveerall OI</label>
+    <div id="chart" *ngIf="OIChart">
+      <apx-chart [series]="OIChart.series" [chart]="OIChart.chart" [dataLabels]="OIChart.dataLabels"
+        [plotOptions]="OIChart.plotOptions" [yaxis]="OIChart.yaxis" [legend]="OIChart.legend" [fill]="OIChart.fill"
+        [stroke]="OIChart.stroke" [tooltip]="OIChart.tooltip" [xaxis]="OIChart.xaxis"></apx-chart>
+    </div>
+  </mat-card>
+</div>
+<div class="row" *ngIf="isCallPutTrendEnabled">
+  <mat-card class="col-12">
+    <apx-chart *ngIf="callPutOITrendLineChart" [series]="callPutOITrendLineChart.series"
+      [chart]="callPutOITrendLineChart.chart" [xaxis]="callPutOITrendLineChart.xaxis"
+      [stroke]="callPutOITrendLineChart.stroke" [colors]="callPutOITrendLineChart.colors"
+      [dataLabels]="callPutOITrendLineChart.dataLabels" [legend]="callPutOITrendLineChart.legend"
+      [markers]="callPutOITrendLineChart.markers" [grid]="callPutOITrendLineChart.grid"
+      [yaxis]="callPutOITrendLineChart.yaxis" [title]="callPutOITrendLineChart.title"></apx-chart>
+  </mat-card>
+</div>
+<div class="row">
+  <mat-form-field appearance="fill" class="col-4" style="margin-left: 35%;">
+    <mat-label>Strike Price</mat-label>
+    <mat-select [(ngModel)]="selectedStrikePrice" (ngModelChange)="strikePriceChange()">
+      <mat-option *ngFor="let strike of strikePriceList" [value]="strike">{{strike}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button (click)="strikePriceChange()" class="btn btn-primary col-2" style="width: 125px;height:40px;margin:10px" >Refresh</button>
+</div>
+<div class="row">
+  <mat-card class="col-6" *ngIf="lineChartForCallPriceAndOI">
+      <apx-chart
+    [series]="lineChartForCallPriceAndOI.series"
+    [chart]="lineChartForCallPriceAndOI.chart"
+    [yaxis]="lineChartForCallPriceAndOI.yaxis"
+    [xaxis]="lineChartForCallPriceAndOI.xaxis"
+    [labels]="lineChartForCallPriceAndOI.labels"
+    [stroke]="lineChartForCallPriceAndOI.stroke"
+    [title]="lineChartForCallPriceAndOI.title"
+    [dataLabels]="lineChartForCallPriceAndOI.dataLabels"
+    [fill]="lineChartForCallPriceAndOI.fill"
+    [tooltip]="lineChartForCallPriceAndOI.tooltip"
+  ></apx-chart>
+  </mat-card>
+  <mat-card class="col-6" *ngIf="lineChartForPutPriceAndOI">
+    <apx-chart
+    [series]="lineChartForPutPriceAndOI.series"
+    [chart]="lineChartForPutPriceAndOI.chart"
+    [yaxis]="lineChartForPutPriceAndOI.yaxis"
+    [xaxis]="lineChartForPutPriceAndOI.xaxis"
+    [labels]="lineChartForPutPriceAndOI.labels"
+    [stroke]="lineChartForPutPriceAndOI.stroke"
+    [title]="lineChartForPutPriceAndOI.title"
+    [dataLabels]="lineChartForPutPriceAndOI.dataLabels"
+    [fill]="lineChartForPutPriceAndOI.fill"
+    [tooltip]="lineChartForPutPriceAndOI.tooltip"
+  ></apx-chart>
+  </mat-card>
+</div>
+<div class="row">
+ <mat-card class="col-12" *ngIf="strikePriceOpenInterestChangeLineChart">
+  <apx-chart [series]="strikePriceOpenInterestChangeLineChart.series" [chart]="strikePriceOpenInterestChangeLineChart.chart"
+        [dataLabels]="strikePriceOpenInterestChangeLineChart.dataLabels" [plotOptions]="strikePriceOpenInterestChangeLineChart.plotOptions"
+        [yaxis]="strikePriceOpenInterestChangeLineChart.yaxis" [legend]="strikePriceOpenInterestChangeLineChart.legend" [fill]="strikePriceOpenInterestChangeLineChart.fill"
+        [stroke]="strikePriceOpenInterestChangeLineChart.stroke" [tooltip]="strikePriceOpenInterestChangeLineChart.tooltip" [xaxis]="strikePriceOpenInterestChangeLineChart.xaxis"></apx-chart>
+ </mat-card>
+</div>

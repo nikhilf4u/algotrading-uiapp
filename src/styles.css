@@ -1,0 +1,24 @@
+@import "ag-grid-community/dist/styles/ag-grid.css";
+@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+
+.ag-pivot-off .ag-focus-managed{
+  background-color: #EEF2F8;
+  color:#213B5A;
+}
+.ag-paging-panel > span {
+  color: black !important;
+  }
+  
+  .ag-root-wrapper {
+  position: relative !important;
+  }
+  
+  .ag-root-wrapper-body {
+  margin-top: 50px;
+  }
+.ag-paging-panel {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  border-top: none !important;
+}

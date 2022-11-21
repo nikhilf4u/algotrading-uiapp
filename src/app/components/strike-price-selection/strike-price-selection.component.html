@@ -1,0 +1,19 @@
+<div style="height:30px;display: flex;justify-content: space-between;">
+    <label style="font-weight: 600;">Select Strike Price</label>
+    <mat-radio-group [(ngModel)]="actionType" (ngModelChange)="changeActionType()">
+        <mat-radio-button style="margin-right: 5px;" [checked]="true" value="buying" name="strikePrice">Buying</mat-radio-button>
+        <mat-radio-button value="selling" name="strikePrice">Selling</mat-radio-button>
+      </mat-radio-group>
+
+      <mat-radio-group [(ngModel)]="optionType" (ngModelChange)="changeOptionType()">
+        <mat-radio-button style="margin-right: 5px;" [checked]="true" value="%CE" name="strikePrice">CE</mat-radio-button>
+        <mat-radio-button value="%PE" name="strikePrice">PE</mat-radio-button>
+      </mat-radio-group>
+    <img src="../../../assets/close.png" style="width: 15px;height:15px" (click)="close()">
+</div>
+<div>
+    <ag-grid-angular style="width: 100%; height: 70vh; margin-top: 0px;" class="ag-theme-alpine" [rowData]="rowData"
+            [columnDefs]="columnDefs"
+            (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+</div>
