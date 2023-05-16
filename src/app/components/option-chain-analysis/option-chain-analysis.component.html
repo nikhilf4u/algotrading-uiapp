@@ -4,6 +4,8 @@
     <mat-radio-button [value]="'niftybank'" name="index">Nifty Bank</mat-radio-button>
   </mat-radio-group>
   <button class="btn btn-primary" (click)="openStrikePriceSelectionDialog()">Select Strike Price</button>
+  <span *ngIf="selectedIndex=='nifty'">PCR : {{niftyPCR}}</span>
+  <span *ngIf="selectedIndex=='niftybank'"><b>PCR</b> : {{bnfPCR}}</span>
   <mat-radio-group>
     <mat-radio-button (change)="changeOIType($event)" style="margin-right: 5px;" [checked]="true" value="changeInOI">
       Change in OI</mat-radio-button>
@@ -81,11 +83,11 @@
   ></apx-chart>
   </mat-card>
 </div>
-<div class="row">
+<!-- <div class="row">
  <mat-card class="col-12" *ngIf="strikePriceOpenInterestChangeLineChart">
   <apx-chart [series]="strikePriceOpenInterestChangeLineChart.series" [chart]="strikePriceOpenInterestChangeLineChart.chart"
         [dataLabels]="strikePriceOpenInterestChangeLineChart.dataLabels" [plotOptions]="strikePriceOpenInterestChangeLineChart.plotOptions"
         [yaxis]="strikePriceOpenInterestChangeLineChart.yaxis" [legend]="strikePriceOpenInterestChangeLineChart.legend" [fill]="strikePriceOpenInterestChangeLineChart.fill"
         [stroke]="strikePriceOpenInterestChangeLineChart.stroke" [tooltip]="strikePriceOpenInterestChangeLineChart.tooltip" [xaxis]="strikePriceOpenInterestChangeLineChart.xaxis"></apx-chart>
  </mat-card>
-</div>
+</div> -->
