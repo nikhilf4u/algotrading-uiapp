@@ -14,18 +14,20 @@ import {MatCardModule} from '@angular/material/card';
 import {MatRadioModule} from '@angular/material/radio';
 import ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { OptionChainAnalysisComponent } from './components/option-chain-analysis/option-chain-analysis.component';
+// import { OptionChainAnalysisComponent } from './components/option-chain-analysis/option-chain-analysis.component';
 import { PlaceOrderComponent } from './components/place-order/place-order.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StrikePriceSelectionComponent } from './components/strike-price-selection/strike-price-selection.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AgGridModule } from 'ag-grid-angular';
+import { TopContractsComponent } from './components/top-contracts/top-contracts.component';
 @NgModule({
   declarations: [
     AppComponent,
-    OptionChainAnalysisComponent,
+    // OptionChainAnalysisComponent,
     PlaceOrderComponent,
-    StrikePriceSelectionComponent
+    StrikePriceSelectionComponent,
+    TopContractsComponent
   ],
   imports: [
     AppRoutingModule,

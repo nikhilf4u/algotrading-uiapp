@@ -44,11 +44,11 @@ export class StrikePriceSelectionComponent implements OnInit {
   }
   getApiData()
   {
-    this.service.getDataForStrikePriceSelection(this.incomingData.selectedIndex,this.actionType,this.optionType).subscribe((response)=>{
-      if(response?.data?.getDataForStrikePriceSelection)
-      {
-        this.rowData=response?.data?.getDataForStrikePriceSelection;
-      }
-    })
+    // this.service.getDataForStrikePriceSelection(this.incomingData.selectedIndex,this.actionType,this.optionType).subscribe((response)=>{
+    //   if(response?.data?.getDataForStrikePriceSelection)
+    //   {
+    //     this.rowData=response?.data?.getDataForStrikePriceSelection;
+    //   }
+    // })
   }
 }

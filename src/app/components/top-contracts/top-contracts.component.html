@@ -1,0 +1,78 @@
+<div style="margin: 10px;">
+    <mat-radio-group [(ngModel)]="selectedIndex" (ngModelChange)="changeIndexData()">
+        <mat-radio-button style="margin-right: 5px;" [checked]="true" value="nifty"
+            name="index">Nifty</mat-radio-button>
+        <mat-radio-button [value]="'niftybank'" name="index">Nifty Bank</mat-radio-button>
+    </mat-radio-group>
+        <mat-form-field appearance="fill" class="col-4" style="margin-left: 35%;">
+          <mat-label>Strike Price</mat-label>
+          <mat-select [(ngModel)]="selectedStrikePrice" (ngModelChange)="strikePriceChange()">
+            <mat-option *ngFor="let strike of strikePriceList" [value]="strike">{{strike}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+</div>
+<div class="col-12" style="display: flex;justify-content: space-between;">
+    <mat-card class="col-6">
+        <apx-chart *ngIf="callATPAndValueLineChart" [series]="callATPAndValueLineChart.series"
+          [chart]="callATPAndValueLineChart.chart" [xaxis]="callATPAndValueLineChart.xaxis"
+          [stroke]="callATPAndValueLineChart.stroke" [colors]="callATPAndValueLineChart.colors"
+          [dataLabels]="callATPAndValueLineChart.dataLabels" [legend]="callATPAndValueLineChart.legend"
+          [markers]="callATPAndValueLineChart.markers" [grid]="callATPAndValueLineChart.grid"
+          [yaxis]="callATPAndValueLineChart.yaxis" [title]="callATPAndValueLineChart.title"></apx-chart>
+      </mat-card>
+      <mat-card class="col-6">
+        <apx-chart *ngIf="putATPAndValueLineChart" [series]="putATPAndValueLineChart.series"
+          [chart]="putATPAndValueLineChart.chart" [xaxis]="putATPAndValueLineChart.xaxis"
+          [stroke]="putATPAndValueLineChart.stroke" [colors]="putATPAndValueLineChart.colors"
+          [dataLabels]="putATPAndValueLineChart.dataLabels" [legend]="putATPAndValueLineChart.legend"
+          [markers]="putATPAndValueLineChart.markers" [grid]="putATPAndValueLineChart.grid"
+          [yaxis]="putATPAndValueLineChart.yaxis" [title]="putATPAndValueLineChart.title"></apx-chart>
+      </mat-card>
+</div>
+<div class="col-12" style="display: flex;justify-content: space-between;">
+    <mat-card class="col-6">
+        <apx-chart *ngIf="callPriceAndOILineChart" [series]="callPriceAndOILineChart.series"
+          [chart]="callPriceAndOILineChart.chart" [xaxis]="callPriceAndOILineChart.xaxis"
+          [stroke]="callPriceAndOILineChart.stroke" [colors]="callPriceAndOILineChart.colors"
+          [dataLabels]="callPriceAndOILineChart.dataLabels" [legend]="callPriceAndOILineChart.legend"
+          [markers]="callPriceAndOILineChart.markers" [grid]="callPriceAndOILineChart.grid"
+          [yaxis]="callPriceAndOILineChart.yaxis" [title]="callPriceAndOILineChart.title"></apx-chart>
+      </mat-card>
+      <mat-card class="col-6">
+        <apx-chart *ngIf="putPriceAndOILineChart" [series]="putPriceAndOILineChart.series"
+          [chart]="putPriceAndOILineChart.chart" [xaxis]="putPriceAndOILineChart.xaxis"
+          [stroke]="putPriceAndOILineChart.stroke" [colors]="putPriceAndOILineChart.colors"
+          [dataLabels]="putPriceAndOILineChart.dataLabels" [legend]="putPriceAndOILineChart.legend"
+          [markers]="putPriceAndOILineChart.markers" [grid]="putPriceAndOILineChart.grid"
+          [yaxis]="putPriceAndOILineChart.yaxis" [title]="putPriceAndOILineChart.title"></apx-chart>
+      </mat-card>
+</div>
+<div class="col-12" style="display: flex;justify-content: space-between;">
+  <mat-card class="col-6">
+      <apx-chart *ngIf="callPriceAndATPLineChart" [series]="callPriceAndATPLineChart.series"
+        [chart]="callPriceAndATPLineChart.chart" [xaxis]="callPriceAndATPLineChart.xaxis"
+        [stroke]="callPriceAndATPLineChart.stroke" [colors]="callPriceAndATPLineChart.colors"
+        [dataLabels]="callPriceAndATPLineChart.dataLabels" [legend]="callPriceAndATPLineChart.legend"
+        [markers]="callPriceAndATPLineChart.markers" [grid]="callPriceAndATPLineChart.grid"
+        [yaxis]="callPriceAndATPLineChart.yaxis" [title]="callPriceAndATPLineChart.title"></apx-chart>
+    </mat-card>
+    <mat-card class="col-6">
+      <apx-chart *ngIf="putPriceAndATPLineChart" [series]="putPriceAndATPLineChart.series"
+        [chart]="putPriceAndATPLineChart.chart" [xaxis]="putPriceAndATPLineChart.xaxis"
+        [stroke]="putPriceAndATPLineChart.stroke" [colors]="putPriceAndATPLineChart.colors"
+        [dataLabels]="putPriceAndATPLineChart.dataLabels" [legend]="putPriceAndATPLineChart.legend"
+        [markers]="putPriceAndATPLineChart.markers" [grid]="putPriceAndATPLineChart.grid"
+        [yaxis]="putPriceAndATPLineChart.yaxis" [title]="putPriceAndATPLineChart.title"></apx-chart>
+    </mat-card>
+</div>
+
+<div class="col-12">
+  <mat-card class="col-12">
+    <apx-chart *ngIf="overallSummaryChart" [series]="overallSummaryChart.series"
+      [chart]="overallSummaryChart.chart" [xaxis]="overallSummaryChart.xaxis"
+      [stroke]="overallSummaryChart.stroke" [colors]="overallSummaryChart.colors"
+      [dataLabels]="overallSummaryChart.dataLabels" [legend]="overallSummaryChart.legend"
+      [markers]="overallSummaryChart.markers" [grid]="overallSummaryChart.grid"
+      [yaxis]="overallSummaryChart.yaxis" [title]="overallSummaryChart.title"></apx-chart>
+  </mat-card>
+</div>

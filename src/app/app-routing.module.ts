@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OptionChainAnalysisComponent } from './components/option-chain-analysis/option-chain-analysis.component';
+// import { OptionChainAnalysisComponent } from './components/option-chain-analysis/option-chain-analysis.component';
 import { PlaceOrderComponent } from './components/place-order/place-order.component';
 import { StrikePriceSelectionComponent } from './components/strike-price-selection/strike-price-selection.component';
 import { TradingPlatformComponent } from './components/trading-platform/trading-platform.component';
+import { TopContractsComponent } from './components/top-contracts/top-contracts.component';
 
 const routes: Routes = [
   {
     path:'',
     component:TradingPlatformComponent
   },
-  {
-    path:'oi-data-analysis',
-    component:OptionChainAnalysisComponent
-  },
+  // {
+  //   path:'oi-data-analysis',
+  //   component:OptionChainAnalysisComponent
+  // },
   {
     path:'place-order',
     component:PlaceOrderComponent
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path:'strike-price-selection',
     component:StrikePriceSelectionComponent
+  },
+  {
+    path:'top-contracts',
+    component:TopContractsComponent
   }
 ];
 
