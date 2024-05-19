@@ -54,13 +54,14 @@ export class GraphqlService {
       }).valueChanges;
   }
 
-  getContractDataForIndexAndStrikePrice(strikePrice:string,index:string): Observable<ApolloQueryResult<any>>{
+  getContractDataForIndexAndStrikePrice(strikePrice:string,index:string,displayDataForSelectedStrikePrice:boolean): Observable<ApolloQueryResult<any>>{
     return this.apollo
       .watchQuery<any>({
         query: QUERY_TO_GET_CONTRACT_DATA_FOR_INDEX_AND_STRIKE_PRICE,
         variables:{
           indexType:index,
-          strikePrice:strikePrice
+          strikePrice:strikePrice,
+          displayDataForSelectedStrikePrice:displayDataForSelectedStrikePrice
         },
         fetchPolicy: 'network-only',
       }).valueChanges;

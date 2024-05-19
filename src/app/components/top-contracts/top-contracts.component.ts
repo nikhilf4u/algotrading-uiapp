@@ -17,6 +17,7 @@ import {
   ApexTitleSubtitle,
   ApexMarkers,
 } from "ng-apexcharts";
+import { animation } from '@angular/animations';
 export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
@@ -38,7 +39,7 @@ export type ChartOptions = {
   styleUrls: ['./top-contracts.component.css']
 })
 export class TopContractsComponent implements OnInit {
-  selectedIndex:string = "Nifty";
+  selectedIndex:string = "NIFTY";
   callATPAndValueLineChart: Partial<ChartOptions> | any;
   putATPAndValueLineChart: Partial<ChartOptions> | any;
   callPriceAndOILineChart: Partial<ChartOptions> | any;
@@ -48,21 +49,28 @@ export class TopContractsComponent implements OnInit {
   overallSummaryChart: Partial<ChartOptions> | any;
   niftyExpiryDate:string="18";
   strikePriceList:string[] = [];
-  selectedStrikePrice:string = "";
+  selectedStrikePrice:string = ""
+  displayDataForSelectedStrikePrice:boolean = false;
   constructor(private service: GraphqlService) { }
 
   ngOnInit(): void {
 this.getStrikePrices();
     setInterval(() =>{
       this.getTopContracts();
-    },30000)
+    },150000)
   }
   strikePriceChange() {
     this.getTopContracts();
   }
 
+
+  updateCheckBoxChange(event:any) {
+    this.displayDataForSelectedStrikePrice=event;
+  }
+
   getTopContracts() {
-    this.service.getContractDataForIndexAndStrikePrice(this.selectedStrikePrice,this.selectedIndex).subscribe((data) => {
+    this.service.getContractDataForIndexAndStrikePrice(this.selectedStrikePrice,this.selectedIndex,this.displayDataForSelectedStrikePrice).subscribe((data) => {
+      this.selectedStrikePrice = data?.data?.getContractsForIndexAndStrikePrice?.selectedStrikePrice;
       this.callATPAndValueLineChart = {
                 series: [
                   {
@@ -79,7 +87,17 @@ this.getStrikePrices();
                 colors:["#495057","#20c997"],
                 chart: {
                   height: 350,
-                  
+                  animations :{
+                    enabled: false,
+                    animateGradually: {
+                      enabled: false,
+                    
+                  },
+                  dynamicAnimation: {
+                      enabled: false,
+                     
+                  }
+                  },
                   type: "line",
                 },
                 stroke: {
@@ -122,7 +140,18 @@ this.getStrikePrices();
                 ],
                 colors:["#495057","#dc3545"],
                 chart: {
-                  height: 350,
+                  height: 350, 
+                  animations :{
+                    enabled: false,
+                    animateGradually: {
+                      enabled: false,
+                    
+                  },
+                  dynamicAnimation: {
+                      enabled: false,
+                     
+                  }
+                  },
                      
                   type: "line",
                 },
@@ -173,6 +202,17 @@ this.getStrikePrices();
                 chart: {
                   height: 350,
                   type: "line",
+                  animations :{
+                    enabled: false,
+                    animateGradually: {
+                      enabled: false,
+                    
+                  },
+                  dynamicAnimation: {
+                      enabled: false,
+                     
+                  }
+                  },
                 },
                 stroke: {
                   width: [3, 3]
@@ -222,6 +262,17 @@ this.getStrikePrices();
                 chart: {
                   height: 350,
                   type: "line",
+                  animations :{
+                    enabled: false,
+                    animateGradually: {
+                      enabled: false,
+                    
+                  },
+                  dynamicAnimation: {
+                      enabled: false,
+                     
+                  }
+                  },
                 },
                 stroke: {
                   width: [3, 3]
@@ -271,6 +322,17 @@ this.getStrikePrices();
                 chart: {
                   height: 350,
                   type: "line",
+                  animations :{
+                    enabled: false,
+                    animateGradually: {
+                      enabled: false,
+                    
+                  },
+                  dynamicAnimation: {
+                      enabled: false,
+                     
+                  }
+                  },
                 },
                 stroke: {
                   width: [3, 3]
@@ -316,6 +378,17 @@ this.getStrikePrices();
                 chart: {
                   height: 350,
                   type: "line",
+                  animations :{
+                    enabled: false,
+                    animateGradually: {
+                      enabled: false,
+                    
+                  },
+                  dynamicAnimation: {
+                      enabled: false,
+                     
+                  }
+                  },
                 },
                 stroke: {
                   width: [3, 3]
@@ -361,7 +434,17 @@ this.getStrikePrices();
         ],
         chart: {
           height: 1000,
-
+          animations :{
+            enabled: false,
+            animateGradually: {
+              enabled: false,
+            
+          },
+          dynamicAnimation: {
+              enabled: false,
+             
+          }
+          },
           type: "line",
         },
         stroke: {
@@ -384,7 +467,7 @@ this.getStrikePrices();
             }
           },
           {
-            min:400,
+            min:100,
             max:1500,
             tickAmount:6,
             opposite: true,
@@ -406,7 +489,7 @@ this.getStrikePrices();
   }
 
   changeIndexData() {
-
+    this.getStrikePrices();
   }
 
 }

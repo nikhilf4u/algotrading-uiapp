@@ -21,6 +21,9 @@ import { StrikePriceSelectionComponent } from './components/strike-price-selecti
 import { MatDialogModule } from '@angular/material/dialog';
 import { AgGridModule } from 'ag-grid-angular';
 import { TopContractsComponent } from './components/top-contracts/top-contracts.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +48,9 @@ import { TopContractsComponent } from './components/top-contracts/top-contracts.
     NgApexchartsModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
     AgGridModule
     ],
   providers: [GraphqlService],

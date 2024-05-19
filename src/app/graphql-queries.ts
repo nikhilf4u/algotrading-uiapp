@@ -15,8 +15,8 @@ export const QUERY_TO_GET_OPTION_CHAIN_DATA_FOR_STRIKE_PRICE: DocumentNode = gql
   }
 }`
 
-export const QUERY_TO_GET_CONTRACT_DATA_FOR_INDEX_AND_STRIKE_PRICE: DocumentNode = gql`query($indexType:String,$strikePrice:String){
-  getContractsForIndexAndStrikePrice(indexType:$indexType,strikePrice:$strikePrice)
+export const QUERY_TO_GET_CONTRACT_DATA_FOR_INDEX_AND_STRIKE_PRICE: DocumentNode = gql`query($indexType:String,$strikePrice:String,$displayDataForSelectedStrikePrice:Boolean){
+  getContractsForIndexAndStrikePrice(indexType:$indexType,strikePrice:$strikePrice,displayDataForSelectedStrikePrice:$displayDataForSelectedStrikePrice)
   {
     callPriceList
     callOpenInterestList
@@ -28,6 +28,7 @@ export const QUERY_TO_GET_CONTRACT_DATA_FOR_INDEX_AND_STRIKE_PRICE: DocumentNode
     putTimeList
     putValueList
     putAtpList
+    selectedStrikePrice
   }
 }`
 

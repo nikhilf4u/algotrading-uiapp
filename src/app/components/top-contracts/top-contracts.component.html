@@ -1,15 +1,21 @@
 <div style="margin: 10px;">
     <mat-radio-group [(ngModel)]="selectedIndex" (ngModelChange)="changeIndexData()">
-        <mat-radio-button style="margin-right: 5px;" [checked]="true" value="nifty"
+        <mat-radio-button  style="margin-right: 5px;"  value="NIFTY"
             name="index">Nifty</mat-radio-button>
-        <mat-radio-button [value]="'niftybank'" name="index">Nifty Bank</mat-radio-button>
+        <mat-radio-button value="BANKNIFTY" name="index">Nifty Bank</mat-radio-button>
     </mat-radio-group>
         <mat-form-field appearance="fill" class="col-4" style="margin-left: 35%;">
           <mat-label>Strike Price</mat-label>
           <mat-select [(ngModel)]="selectedStrikePrice" (ngModelChange)="strikePriceChange()">
             <mat-option *ngFor="let strike of strikePriceList" [value]="strike">{{strike}}</mat-option>
           </mat-select>
+          
         </mat-form-field>
+
+        <mat-checkbox [(ngModel)]="displayDataForSelectedStrikePrice"
+                        (ngModelChange)="updateCheckBoxChange($event)">
+            Display Selected Strike Price Data
+          </mat-checkbox>
 </div>
 <div class="col-12" style="display: flex;justify-content: space-between;">
     <mat-card class="col-6">
