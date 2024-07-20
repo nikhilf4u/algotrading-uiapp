@@ -5,6 +5,7 @@ import { PlaceOrderComponent } from './components/place-order/place-order.compon
 import { StrikePriceSelectionComponent } from './components/strike-price-selection/strike-price-selection.component';
 import { TradingPlatformComponent } from './components/trading-platform/trading-platform.component';
 import { TopContractsComponent } from './components/top-contracts/top-contracts.component';
+import { AtpDetailsComponent } from './components/atp-details/atp-details.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path:'top-contracts',
     component:TopContractsComponent
+  },
+  {
+    path:'atp-details',
+    component:AtpDetailsComponent
   }
 ];
 

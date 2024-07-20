@@ -48,8 +48,10 @@ export class TopContractsComponent implements OnInit {
   putPriceAndATPLineChart: Partial<ChartOptions> | any;
   overallSummaryChart: Partial<ChartOptions> | any;
   niftyExpiryDate:string="18";
-  strikePriceList:string[] = [];
-  selectedStrikePrice:string = ""
+  strikePriceList:number[] = [];
+  selectedStrikePrice:number = 0;
+  callStrike:number = 0;
+  putStrike:number = 0;
   displayDataForSelectedStrikePrice:boolean = false;
   constructor(private service: GraphqlService) { }
 
@@ -70,21 +72,28 @@ this.getStrikePrices();
 
   getTopContracts() {
     this.service.getContractDataForIndexAndStrikePrice(this.selectedStrikePrice,this.selectedIndex,this.displayDataForSelectedStrikePrice).subscribe((data) => {
-      this.selectedStrikePrice = data?.data?.getContractsForIndexAndStrikePrice?.selectedStrikePrice;
+      this.selectedStrikePrice = data?.data?.getContractDataForIndexAndStrikePrice?.selectedStrikePrice;
+      this.callStrike = this.selectedStrikePrice-300;
+      this.putStrike = this.selectedStrikePrice+200;
       this.callATPAndValueLineChart = {
                 series: [
                   {
-                    name: "ATP Val",
+                    name: "ATP 1 Value",
                     type: "line",
-                    data: data?.data?.getContractsForIndexAndStrikePrice?.callValueList,
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.callAtp1ValueList,
                   },
                   {
-                    name: "Price Val",
+                    name: "ATP 3 Value",
                     type: "line",
-                    data: data?.data?.getContractsForIndexAndStrikePrice?.callOpenInterestList
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.callAtp3ValueList,
+                  },
+                  {
+                    name: "Market Price Val",
+                    type: "line",
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.callMarketPriceValueList
                   }
                 ],
-                colors:["#495057","#20c997"],
+                colors:["#495057","#0000FF","#20c997"],
                 chart: {
                   height: 350,
                   animations :{
@@ -101,44 +110,56 @@ this.getStrikePrices();
                   type: "line",
                 },
                 stroke: {
-                  width: [3, 3]
+                  width: [3, 3, 3]
                 },
                 title: {
                   text: "CALL ATP VS Price Value"
                 },
                 xaxis: {
                   title: "Time",
-                  categories:data?.data?.getContractsForIndexAndStrikePrice?.callTimeList,
+                  categories:data?.data?.getContractDataForIndexAndStrikePrice?.callTimeList,
                 },
-                yaxis: [
-                  {
-                    min:0,
-                    max:2000000000,
-                    tickAmount:5,
-                  },
-                  {
-                    min:0,
-                    max:2000000000,
-                    tickAmount:5,
-                    opposite: true,                   
-                  }
-                ]
+                // yaxis: [
+                //   {
+                //     min:0,
+                //     max:3000000000,
+                //     tickAmount:5,
+                //   },
+                //   {
+                //     min:0,
+                //     max:3000000000,
+                //     tickAmount:5,
+                    
+                //   },
+                  
+                //   {
+                //     min:0,
+                //     max:3000000000,
+                //     tickAmount:5,
+                //     opposite: true,                   
+                //   }
+                // ]
               };
 
               this.putATPAndValueLineChart = {
                 series: [
                   {
-                    name: "ATP Val",
+                    name: "ATP 1 Val",
                     type: "line",
-                    data: data?.data?.getContractsForIndexAndStrikePrice?.putValueList
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.putAtp1ValueList
+                  },
+                  {
+                    name: "ATP 3 Val",
+                    type: "line",
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.putAtp3ValueList
                   },
                   {
                     name: "Price Val",
                     type: "line",
-                    data: data?.data?.getContractsForIndexAndStrikePrice?.putOpenInterestList
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.putMarketPriceValueList
                   }
                 ],
-                colors:["#495057","#dc3545"],
+                colors:["#495057","#0000FF","#dc3545"],
                 chart: {
                   height: 350, 
                   animations :{
@@ -156,46 +177,56 @@ this.getStrikePrices();
                   type: "line",
                 },
                 stroke: {
-                  width: [3, 3]
+                  width: [3, 3, 3]
                 },
                 title: {
                   text: "PUT ATP VS Price Value"
                 },
                 xaxis: {
                   title: "Time",
-                  categories:data?.data?.getContractsForIndexAndStrikePrice?.putTimeList,
+                  categories:data?.data?.getContractDataForIndexAndStrikePrice?.putTimeList,
                 },
-                yaxis: [
-                  {
-                    min:0,
-                    max:2000000000,
-                    tickAmount:5,
-                    // title: {
-                    //   text: "ATP"
-                    // }
-                  },
-                  {
-                    min:0,
-                    max:2000000000,
-                    tickAmount:5,
-                    opposite: true,
-                    // title: {
-                    //   text: "Value"
-                    // }
-                  }
-                ]
+                // yaxis: [
+                //   {
+                //     min:0,
+                //     max:3000000000,
+                //     tickAmount:5,
+                //     // title: {
+                //     //   text: "ATP"
+                //     // }
+                //   },
+                //   {
+                //     min:0,
+                //     max:3000000000,
+                //     tickAmount:5,
+                //     // title: {
+                //     //   text: "ATP"
+                //     // }
+                //   },
+                //   {
+                //     min:0,
+                //     max:3000000000,
+                //     tickAmount:5,
+                //     opposite: true,
+                //     // title: {
+                //     //   text: "Value"
+                //     // }
+                //   }
+                // ]
               };    
+
+
               this.callPriceAndOILineChart = {
                 series: [
                   {
-                    name: "Call ATP Val",
+                    name: "Call ATP 3 Val",
                     type: "line",
-                    data: data?.data?.getContractsForIndexAndStrikePrice?.callValueList
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.callAtp3ValueList
                   },
                   {
-                    name: "Put ATP Val",
+                    name: "Put ATP 3 Val",
                     type: "line",
-                    data: data?.data?.getContractsForIndexAndStrikePrice?.putValueList
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.putAtp3ValueList
                   }
                 ],
                 colors:["#20c997","#dc3545"],
@@ -222,27 +253,28 @@ this.getStrikePrices();
                 },
                 xaxis: {
                   title: "Time",
-                  categories:data?.data?.getContractsForIndexAndStrikePrice?.callTimeList,
+                  categories:data?.data?.getContractDataForIndexAndStrikePrice?.callTimeList,
                 },
-                yaxis: [
-                  {
-                    min:0,
-                    max:2000000000,
-                    tickAmount:5,
-                    // title: {
-                    //   text: "Price"
-                    // }
-                  },
-                  {
-                    min:0,
-                    max:2000000000,
-                    tickAmount:5,
-                    opposite: true,
-                    // title: {
-                    //   text: "OI"
-                    // }
-                  }
-                ]
+                // yaxis: [
+                //   {
+                //     min:0,
+                //     max:3000000000,
+                //     tickAmount:5,
+                //     // title: {
+                //     //   text: "Price"
+                //     // }
+                //   },
+                 
+                //   {
+                //     min:0,
+                //     max:3000000000,
+                //     tickAmount:5,
+                //     opposite: true,
+                //     // title: {
+                //     //   text: "OI"
+                //     // }
+                //   }
+                // ]
               };    
               
               this.putPriceAndOILineChart = {
@@ -250,12 +282,12 @@ this.getStrikePrices();
                   {
                     name: "CALL Price Val",
                     type: "line",
-                    data: data?.data?.getContractsForIndexAndStrikePrice?.callOpenInterestList
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.callMarketPriceValueList
                   },
                   {
                     name: "PUT Price Val",
                     type: "line",
-                    data: data?.data?.getContractsForIndexAndStrikePrice?.putOpenInterestList
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.putMarketPriceValueList
                   }
                 ],
                 colors:["#20c997","#dc3545"],
@@ -282,43 +314,48 @@ this.getStrikePrices();
                 },
                 xaxis: {
                   title: "Time",
-                  categories:data?.data?.getContractsForIndexAndStrikePrice?.putTimeList,
+                  categories:data?.data?.getContractDataForIndexAndStrikePrice?.putTimeList,
                 },
-                yaxis: [
-                  {
-                    min:0,
-                    max:2000000000,
-                    tickAmount:5,
-                    // title: {
-                    //   text: "Price"
-                    // }
-                  },
-                  {
-                    min:0,
-                    max:2000000000,
-                    tickAmount:5,
-                    opposite: true,
-                    // title: {
-                    //   text: "OI"
-                    // }
-                  }
-                ]
+                // yaxis: [
+                //   {
+                //     min:0,
+                //     max:3000000000,
+                //     tickAmount:5,
+                //     // title: {
+                //     //   text: "Price"
+                //     // }
+                //   },
+                //   {
+                //     min:0,
+                //     max:3000000000,
+                //     tickAmount:5,
+                //     opposite: true,
+                //     // title: {
+                //     //   text: "OI"
+                //     // }
+                //   }
+                // ]
               };    
 
               this.callPriceAndATPLineChart = {
                 series: [
                   {
-                    name: "Price",
+                    name: "ATP1",
                     type: "line",
-                    data: data?.data?.getContractsForIndexAndStrikePrice?.callPriceList
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.callATP1List
                   },
                   {
-                    name: "ATP",
+                    name: "ATP3",
                     type: "line",
-                    data: data?.data?.getContractsForIndexAndStrikePrice?.callAtpList
-                  }
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.callATP3List
+                  },
+                  {
+                    name: "Price",
+                    type: "line",
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.callLastPriceList
+                  }                  
                 ],
-                colors:["#20c997","#495057"],
+                colors:["#495057","#0000FF","#20c997"],
                 chart: {
                   height: 350,
                   type: "line",
@@ -335,7 +372,7 @@ this.getStrikePrices();
                   },
                 },
                 stroke: {
-                  width: [3, 3]
+                  width: [3, 3, 3]
                 },
                 title: {
                   text: "CALL Price VS ATP"
@@ -343,38 +380,58 @@ this.getStrikePrices();
               
                 xaxis: {
                   title: "Time",
-                  categories:data?.data?.getContractsForIndexAndStrikePrice?.callTimeList,
+                  categories:data?.data?.getContractDataForIndexAndStrikePrice?.callTimeList,
                 },
-                yaxis: [
-                  {
-                    // title: {
-                    //   text: "Price"
+                // yaxis: [
+                //   {
+                //     // title: {
+                //     //   text: "Price"
                       
-                    // }
-                  },
-                  {
-                    opposite: true,
-                    // title: {
-                    //   text: "ATP"
-                    // }
-                  }
-                ]
+                //     // }
+                //     min:0,
+                //     max:700,
+                //     tickAmount:7
+                //   },
+                //   {
+                //     min:0,
+                //     max:700,
+                //     tickAmount:7,
+                //     // title: {
+                //     //   text: "ATP"
+                //     // }
+                //   },
+                //   {
+                //     opposite: true,
+                //     // title: {
+                //     //   text: "ATP"
+                //     // }
+                //     min:0,
+                //     max:700,
+                //     tickAmount:7
+                //   }
+                // ]
               };    
               
               this.putPriceAndATPLineChart = {
                 series: [
                   {
-                    name: "Price",
+                    name: "ATP1",
                     type: "line",
-                    data: data?.data?.getContractsForIndexAndStrikePrice?.putPriceList
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.putATP1List
                   },
                   {
-                    name: "ATP",
+                    name: "ATP3",
                     type: "line",
-                    data: data?.data?.getContractsForIndexAndStrikePrice?.putAtpList
-                  }
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.putATP3List
+                  },
+                  {
+                    name: "Price",
+                    type: "line",
+                    data: data?.data?.getContractDataForIndexAndStrikePrice?.putLastPriceList
+                  },
+                  
                 ],
-                colors:["#dc3545","#495057"],
+                colors:["#495057","#0000FF","#dc3545"],
                 chart: {
                   height: 350,
                   type: "line",
@@ -391,99 +448,113 @@ this.getStrikePrices();
                   },
                 },
                 stroke: {
-                  width: [3, 3]
+                  width: [3, 3, 3]
                 },
                 title: {
                   text: "PUT Price VS ATP"
                 },
                 xaxis: {
                   title: "Time",
-                  categories:data?.data?.getContractsForIndexAndStrikePrice?.putTimeList,
+                  categories:data?.data?.getContractDataForIndexAndStrikePrice?.putTimeList,
                   
                 },
-                yaxis: [
-                  {
-                    // title: {
-                    //   text: "Price"
-                    // }
-                  },
-                  {
-                    opposite: true,
-                    // title: {
-                    //   text: "ATP"
-                    // }
-                  }
-                ]
+                // yaxis: [
+                //   {
+                //     // title: {
+                //     //   text: "Price"
+                //     // }
+                //     min:0,
+                //     max:700,
+                //     tickAmount:7
+                //   },
+                //   {
+                //     min:0,
+                //     max:700,
+                //     tickAmount:7,
+                //     // title: {
+                //     //   text: "ATP"
+                //     // }
+                //   },
+                //   {
+                //     opposite: true,
+                //     // title: {
+                //     //   text: "ATP"
+                //     // }
+                //     min:0,
+                //     max:700,
+                //     tickAmount:7
+                //   }
+                // ]
               };    
     })
 
-    this.service.getContractSummary().subscribe((data)=> {
-      console.log(data.data.getContractSummary)
-      this.overallSummaryChart = {
-        series: [
-          {
-            name: "Call Atp Sum",
-            type: "line",
-            data: data?.data?.getContractSummary?.callAtpSumList
-          },
-          {
-            name: "Put Atp Sum",
-            type: "line",
-            data: data?.data?.getContractSummary?.putAtpSumList
-          }
-        ],
-        chart: {
-          height: 1000,
-          animations :{
-            enabled: false,
-            animateGradually: {
-              enabled: false,
+    // this.service.getContractSummary().subscribe((data)=> {
+    //   console.log(data.data.getContractSummary)
+    //   this.overallSummaryChart = {
+    //     series: [
+    //       {
+    //         name: "Call Atp Sum",
+    //         type: "line",
+    //         data: data?.data?.getContractSummary?.callAtpSumList
+    //       },
+    //       {
+    //         name: "Put Atp Sum",
+    //         type: "line",
+    //         data: data?.data?.getContractSummary?.putAtpSumList
+    //       }
+    //     ],
+    //     chart: {
+    //       height: 1000,
+    //       animations :{
+    //         enabled: false,
+    //         animateGradually: {
+    //           enabled: false,
             
-          },
-          dynamicAnimation: {
-              enabled: false,
+    //       },
+    //       dynamicAnimation: {
+    //           enabled: false,
              
-          }
-          },
-          type: "line",
-        },
-        stroke: {
-          width: [3, 3]
-        },
-        title: {
-          text: "Call ATP Sum VS Put ATP Sum"
-        },
-        xaxis: {
-          title: "Time",
-          categories:data?.data?.getContractSummary?.timeList,
-        },
-        yaxis: [
-          {
-            min:400,
-            max:1500,
-            tickAmount:6,
-            title: {
-              text: "Price"
-            }
-          },
-          {
-            min:100,
-            max:1500,
-            tickAmount:6,
-            opposite: true,
-            title: {
-              text: "ATP"
-            }
-          }
-        ]
-      };    
-    })
+    //       }
+    //       },
+    //       type: "line",
+    //     },
+    //     stroke: {
+    //       width: [3, 3]
+    //     },
+    //     title: {
+    //       text: "Call ATP Sum VS Put ATP Sum"
+    //     },
+    //     xaxis: {
+    //       title: "Time",
+    //       categories:data?.data?.getContractSummary?.timeList,
+    //     },
+    //     yaxis: [
+    //       {
+    //         min:400,
+    //         max:1500,
+    //         tickAmount:6,
+    //         title: {
+    //           text: "Price"
+    //         }
+    //       },
+    //       {
+    //         min:100,
+    //         max:1500,
+    //         tickAmount:6,
+    //         opposite: true,
+    //         title: {
+    //           text: "ATP"
+    //         }
+    //       }
+    //     ]
+    //   };    
+    // })
   }
 
   getStrikePrices() {
     this.service.getStrikePriceList(this.selectedIndex).subscribe((data) => {
-      this.strikePriceList = data?.data?.getStrikePriceList;
-      this.selectedStrikePrice = this.strikePriceList.length>1 ? this.strikePriceList[0] : "";
+      this.strikePriceList = data?.data?.getContractDataStrikePriceList;
+      this.selectedStrikePrice = this.strikePriceList.length>1 ? this.strikePriceList[0] : 0;
       this.getTopContracts();
     },(err) => console.log("error while fetching strike price",err))
   }

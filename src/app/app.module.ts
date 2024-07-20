@@ -24,13 +24,15 @@ import { TopContractsComponent } from './components/top-contracts/top-contracts.
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { AtpDetailsComponent } from './components/atp-details/atp-details.component';
 @NgModule({
   declarations: [
     AppComponent,
     // OptionChainAnalysisComponent,
     PlaceOrderComponent,
     StrikePriceSelectionComponent,
-    TopContractsComponent
+    TopContractsComponent,
+    AtpDetailsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -51,7 +53,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
-    AgGridModule
+    AgGridModule,
     ],
   providers: [GraphqlService],
   bootstrap: [AppComponent]

@@ -10,7 +10,7 @@ import { not } from '@angular/compiler/src/output/output_ast';
 import { HttpClient } from '@angular/common/http';
 import {  OptionChainInputDto } from '../models/OptionChain';
 import { MUTATION_TO_SAVE_OI_DATA } from '../graphql-mutations';
-import { QUERY_TO_GET_CONTRACT_DATA_FOR_INDEX_AND_STRIKE_PRICE, QUERY_TO_GET_CONTRACT_SUMMARY, QUERY_TO_GET_Change_IN_OI, QUERY_TO_GET_OPTION_CHAIN_DATA_FOR_STRIKE_PRICE, QUERY_TO_GET_STRIKE_PRICE_LIST } from '../graphql-queries';
+import { QUERY_TO_GET_ATP_DATA, QUERY_TO_GET_CONTRACT_DATA_FOR_INDEX_AND_STRIKE_PRICE, QUERY_TO_GET_CONTRACT_SUMMARY, QUERY_TO_GET_Change_IN_OI, QUERY_TO_GET_OPTION_CHAIN_DATA_FOR_STRIKE_PRICE, QUERY_TO_GET_STRIKE_PRICE_LIST } from '../graphql-queries';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +54,7 @@ export class GraphqlService {
       }).valueChanges;
   }
 
-  getContractDataForIndexAndStrikePrice(strikePrice:string,index:string,displayDataForSelectedStrikePrice:boolean): Observable<ApolloQueryResult<any>>{
+  getContractDataForIndexAndStrikePrice(strikePrice:number,index:string,displayDataForSelectedStrikePrice:boolean): Observable<ApolloQueryResult<any>>{
     return this.apollo
       .watchQuery<any>({
         query: QUERY_TO_GET_CONTRACT_DATA_FOR_INDEX_AND_STRIKE_PRICE,
@@ -84,6 +84,15 @@ export class GraphqlService {
       variables:{}
     }).valueChanges;
   }
+
+  getAtpData():Observable<ApolloQueryResult<any>> {
+    return this.apollo.watchQuery<any>({
+      query :QUERY_TO_GET_ATP_DATA,
+      fetchPolicy:'network-only',
+      variables:{}
+    }).valueChanges;
+  }
+
   // getChangeInOIForIndex(index:string):Observable<ApolloQueryResult<any>>{
   //   return this.apollo
   //     .watchQuery<any>({
